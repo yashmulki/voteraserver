@@ -1,0 +1,18 @@
+name: votera_server
+description: An empty Aqueduct application.
+version: 0.0.1
+author: stable|kernel <jobs@stablekernel.com>
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  aqueduct: ^3.0.0
+  mongo_dart: ^0.3.5
+  intl: ^0.15.8
+  uri: ^0.11.3+1
+  http: ^0.12.0+2
+
+dev_dependencies:
+  test: ^1.0.0
+  aqueduct_test: ^1.0.0
