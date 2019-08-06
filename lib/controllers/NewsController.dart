@@ -84,10 +84,14 @@ class NewsController extends Controller {
 
     // Add items to database
     var newsCollection = appDatabase.database.collection('news');
-    // var encoded = Utilities.encondeToJson(processedArticles).toList() as List<Map<String, dynamic>>;
     for (var article in articles) {
       await newsCollection.insert(article as Map<String, dynamic>);
     }
+
+    // Add update entry
+     final DbCollection state = appDatabase.database.collection('state');
+     var update = formatter.format(DateTime.now());
+     await state.insert({'identifier': 'refresh', 'lastRefresh': update});
   }
 
   Future fetchArticles() async {

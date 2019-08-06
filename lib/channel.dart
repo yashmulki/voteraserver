@@ -1,5 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:votera_server/controllers/NewsController.dart';
+import 'package:votera_server/controllers/PollController.dart';
 import 'package:votera_server/database.dart';
 import 'votera_server.dart';
 
@@ -47,6 +48,7 @@ class VoteraServerChannel extends ApplicationChannel {
       router
 
       ..route("/news").link(() => NewsController())
+      ..route("/polling").link(() => PollController())
       ..route("/example")
       .linkFunction((request) async { 
         return Response.ok({"key": "value"});
