@@ -16,7 +16,7 @@ class PollController extends Controller {
   }
 
   Future getLatestPoll() async {
-    var data = await http.get('https://yashmulki.me/votera/polling.json');
+    var data = await http.get('http://yashmulki.me/votera/polling.json');
     var body = jsonDecode(data.body);
     return body;
   }
