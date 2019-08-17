@@ -45,7 +45,7 @@ class ElectionController extends ResourceController {
   } 
 
   Future getElectionDate() async {
-    var electionDateURL = 'https://yashmulki.me/votera/election-info.json';
+    var electionDateURL = 'http://yashmulki.me/votera/election-info.json';
     var request = await http.get(electionDateURL);
     var body = jsonDecode(request.body);
     var electionDate = body['date'];
