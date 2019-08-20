@@ -51,6 +51,7 @@ class NewsController extends Controller {
     } else {
       final String lastRefresh = refreshState['lastRefresh'].toString();
       final DateTime date = DateTime.parse(lastRefresh);
+      print(lastRefresh);
       if (date.difference(DateTime.now()).inDays > 1) {
         return true;
       }
@@ -81,6 +82,9 @@ class NewsController extends Controller {
       return null;
     }
     var articles = data['articles'];
+    print(oldest);
+    print(articles);
+    print(oldest);
 
     // Add items to database
     var newsCollection = appDatabase.database.collection('news');
@@ -96,7 +100,8 @@ class NewsController extends Controller {
 
   Future fetchArticles() async {
     var newsCollection = appDatabase.database.collection('news');
-    var articles = await newsCollection.find(where.limit(50)).toList();    
+    var items = await newsCollection.count();
+    var articles = await newsCollection.find(where.skip(items > 50 ? items-50:0).limit(50)).toList();    
     return articles;
   }
 
