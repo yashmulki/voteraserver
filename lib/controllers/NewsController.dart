@@ -8,7 +8,7 @@ import 'package:votera_server/channel.dart';
 import 'package:mongo_dart_query/mongo_dart_query.dart';
 import 'package:http/http.dart' as http;
 
-class NewsController extends Controller {
+class NewsController extends ResourceController {
   final _sources = ["cbc.ca", "nationalpost.com", "ctv.ca",
             "thestar.com", "theglobeandmail.com", "globalnews.ca",
             "huffingtonpost.ca", "financialpost.com", "montrealgazette.com",
@@ -24,8 +24,8 @@ class NewsController extends Controller {
   final _apiKey = '9b095457d61b4d0e90c686875255912d';
   final _newsEndpoint = 'https://newsapi.org/v2/everything';
 
-  @override
-  Future<RequestOrResponse> handle(Request request) async {
+@Operation.get()
+  Future<Response> getNews(@Bind.query('limit') int limit, @Bind.query('offset') int offset) async {
     final bool shouldRefresh = await needsRefresh();
 
     print(shouldRefresh);
@@ -34,12 +34,14 @@ class NewsController extends Controller {
       await refresh();
     }
 
-    var articles = await fetchArticles();
+    var result = await fetchArticles(limit, offset);
+    var articles = result[0];
+    var items = result[1];
     if (articles == null) {
      return Response.notFound();
     }
 
-    return Response.ok({'newsArticles': articles});
+    return Response.ok({'newsArticles': articles, 'count': items});
   }
 
   Future<bool> needsRefresh() async {
@@ -74,6 +76,7 @@ class NewsController extends Controller {
     // Generate combined String and URL encode it
     final String requestString = '$_newsEndpoint?q=$query&domains=$sources&from=$oldest&apiKey=$_apiKey';
     print(requestString);
+
     // Perform http request
     var response = await http.get(requestString);
     var data = jsonDecode(response.body);
@@ -98,11 +101,11 @@ class NewsController extends Controller {
      await state.insert({'identifier': 'refresh', 'lastRefresh': update});
   }
 
-  Future fetchArticles() async {
+  Future fetchArticles(int limit, int offset) async {
     var newsCollection = appDatabase.database.collection('news');
     var items = await newsCollection.count();
-    var articles = await newsCollection.find(where.skip(items > 50 ? items-50:0).limit(50)).toList();    
-    return articles;
+    var articles = await newsCollection.find(where.skip(items > limit + offset ? items-limit-offset : 0).limit(limit)).toList();    
+    return [articles, items];
   }
 
 }
