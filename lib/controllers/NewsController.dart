@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:math';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:intl/intl.dart';
 import 'package:mongo_dart/mongo_dart.dart';
@@ -92,6 +93,7 @@ class NewsController extends ResourceController {
     // Add items to database
     var newsCollection = appDatabase.database.collection('news');
     for (var article in articles) {
+      (article as Map<String, dynamic> ).addAll({'time':DateTime.now().millisecondsSinceEpoch});
       await newsCollection.insert(article as Map<String, dynamic>);
     }
 
@@ -104,7 +106,14 @@ class NewsController extends ResourceController {
   Future fetchArticles(int limit, int offset) async {
     var newsCollection = appDatabase.database.collection('news');
     var items = await newsCollection.count();
-    var articles = await newsCollection.find(where.skip(items > limit + offset ? items-limit-offset : 0).limit(limit)).toList();    
+
+    if (items <= offset) {
+      return [[], items];
+    }
+
+    var articles = await newsCollection.find(where.sortBy('time', descending: true).skip(offset).limit(limit)).toList();
+
+   // var articles = await newsCollection.find(where.skip(items > limit + offset ? items-limit-offset : max(items-offset, 0)).limit(limit)).toList();    
     return [articles, items];
   }
 
