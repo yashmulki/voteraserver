@@ -21,6 +21,7 @@ class NewsController extends ResourceController {
             "\"Liberal Party\"", "\"Tories\"",
             "\"Conservative Party of Canada\"", "\"NDP\""
             "\"People's Party\"", "\"CPC\""];
+  final _exclude = ["\"Telus offers bill credits\""];
   final _apiKey = '9b095457d61b4d0e90c686875255912d';
   final _newsEndpoint = 'https://newsapi.org/v2/everything';
 
@@ -69,7 +70,7 @@ class NewsController extends ResourceController {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     // Generate parameter strings
-    final String query = Uri.encodeComponent(_queries.join(' OR '));
+    final String query = Uri.encodeComponent(_queries.join(' OR ') + ' NOT ' + _exclude.join(' NOT '));
     final String sources = _sources.join(',');
     final String oldest = formatter.format(oldestDate);
 
