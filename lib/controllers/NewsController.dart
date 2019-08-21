@@ -15,13 +15,12 @@ class NewsController extends ResourceController {
             "huffingtonpost.ca", "financialpost.com", "montrealgazette.com",
             "macleans.ca", "nationalobserver.com"];
             
-  final _queries = [ "2019 Election", "Federal Election",
-            "Parliament Hill", "Justin Trudeau", "Trudeau",
-            "Andrew Scheer", "Scheer", "Jagmeet Singh",
-            "Elizabeth May", "Maxime Bernier", "Yves-François Blanchet",
-            "Grits", "Liberals", "Tories",
-            "Conservatives", "NDP", "Green Party",
-            "People's Party", "CPC"];
+  final _queries = [ "\"2019 Federal Election\"", "\"Justin Trudeau\"", "\"Trudeau\"",
+            "\"Andrew Scheer\"", "\"Scheer\"", "\"Jagmeet Singh\"",
+            "\"Elizabeth May\"", "\"Maxime Bernier\"", "\"Yves-François Blanchet\"",
+            "\"Liberal Party\"", "\"Tories\"",
+            "\"Conservative Party of Canada\"", "\"NDP\""
+            "\"People's Party\"", "\"CPC\""];
   final _apiKey = '9b095457d61b4d0e90c686875255912d';
   final _newsEndpoint = 'https://newsapi.org/v2/everything';
 
