@@ -65,7 +65,7 @@ class NewsController extends ResourceController {
 
     // Calculate oldest date
     final DateTime now = DateTime.now();
-    final DateTime oldestDate = DateTime(now.year, now.month, now.day - 1);
+    final DateTime oldestDate = DateTime(now.year, now.month, now.day - 2);
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     // Generate parameter strings
