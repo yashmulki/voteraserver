@@ -55,7 +55,8 @@ class NewsController extends ResourceController {
       final String lastRefresh = refreshState['lastRefresh'].toString();
       final DateTime date = DateTime.parse(lastRefresh);
       print(lastRefresh);
-      if (date.difference(DateTime.now()).inDays > 1) {
+      final differnce = date.difference(DateTime.now()).inDays;
+      if (differnce > 1) {
         return true;
       }
       return false;
@@ -66,7 +67,7 @@ class NewsController extends ResourceController {
 
     // Calculate oldest date
     final DateTime now = DateTime.now();
-    final DateTime oldestDate = DateTime(now.year, now.month, now.day - 2);
+    final DateTime oldestDate = DateTime(now.year, now.month, now.day - 1);
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     // Generate parameter strings
@@ -118,3 +119,6 @@ class NewsController extends ResourceController {
   }
 
 }
+
+// A Platform for Democracy
+// A PLATFORM FOR DEMOCRACY
