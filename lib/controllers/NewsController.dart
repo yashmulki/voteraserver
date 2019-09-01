@@ -55,7 +55,7 @@ class NewsController extends ResourceController {
       final String lastRefresh = refreshState['lastRefresh'].toString();
       final DateTime date = DateTime.parse(lastRefresh);
       print(lastRefresh);
-      final differnce = date.difference(DateTime.now()).inDays;
+      final differnce = date.difference(DateTime.now()).inDays.abs();
       if (differnce > 1) {
         return true;
       }
