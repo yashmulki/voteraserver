@@ -94,8 +94,17 @@ class NewsController extends ResourceController {
     // Add items to database
     var newsCollection = appDatabase.database.collection('news');
     for (var article in articles) {
-      (article as Map<String, dynamic> ).addAll({'time':DateTime.now().millisecondsSinceEpoch});
-      await newsCollection.insert(article as Map<String, dynamic>);
+       var current = article as Map<String, dynamic>;
+      if (current['description'] == null) {
+        if (article['content'] != null) {
+          current['description'] = article['content'];
+        } else {
+          current['description'] = 'No Description Found';
+        }
+      }
+      current.addAll({'time':DateTime.now().millisecondsSinceEpoch});
+      await newsCollection.insert(current);
+      
     }
 
     // Add update entry
