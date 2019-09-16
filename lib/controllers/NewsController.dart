@@ -66,9 +66,12 @@ class NewsController extends ResourceController {
   Future refresh() async {
 
     // Calculate oldest date
-    final DateTime now = DateTime.now();
-    final DateTime oldestDate = DateTime(now.year, now.month, now.day - 1);
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final DbCollection state = appDatabase.database.collection('state');
+    final Map<String, dynamic> refreshState = await state.findOne({'identifier': 'refresh'});
+    final String lastRefresh = refreshState['lastRefresh'].toString();
+    final DateTime oldestDate = DateTime.parse(lastRefresh);
+    
+    final DateFormat formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     // Generate parameter strings
     final String query = Uri.encodeComponent(_queries.join(' OR ') + ' NOT ' + _exclude.join(' NOT '));
@@ -108,7 +111,6 @@ class NewsController extends ResourceController {
     }
 
     // Add update entry
-     final DbCollection state = appDatabase.database.collection('state');
      var update = formatter.format(DateTime.now());
      await state.insert({'identifier': 'refresh', 'lastRefresh': update});
   }
