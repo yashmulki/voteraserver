@@ -68,8 +68,14 @@ class NewsController extends ResourceController {
     // Calculate oldest date
     final DbCollection state = appDatabase.database.collection('state');
     final Map<String, dynamic> refreshState = await state.findOne({'identifier': 'refresh'});
-    final String lastRefresh = refreshState['lastRefresh'].toString();
-    final DateTime oldestDate = DateTime.parse(lastRefresh);
+    
+    final DateTime now = DateTime.now();
+    var oldestDate = DateTime(now.year, now.month, now.day - 1);
+
+    if (refreshState != null) {
+        final String lastRefresh = refreshState['lastRefresh'].toString();
+        oldestDate = DateTime.parse(lastRefresh);
+    }
     
     final DateFormat formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
