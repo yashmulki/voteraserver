@@ -10,9 +10,9 @@ import 'package:mongo_dart_query/mongo_dart_query.dart';
 import 'package:http/http.dart' as http;
 
 class NewsController extends ResourceController {
-  final _sources = ["cbc.ca", "nationalpost.com", "ctv.ca",
+  final _sources = ["nationalpost.com", "cbc.ca", "ctv.ca",
             "thestar.com", "theglobeandmail.com", "globalnews.ca",
-            "huffingtonpost.ca", "financialpost.com", "montrealgazette.com",
+            "huffingtonpost.ca", "montrealgazette.com",
             "macleans.ca", "nationalobserver.com"];
             
   final _queries = [ "\"2019 Federal Election\"", "\"Justin Trudeau\"", "\"Trudeau\"",
