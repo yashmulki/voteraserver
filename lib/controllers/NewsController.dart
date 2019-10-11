@@ -72,6 +72,9 @@ class NewsController extends ResourceController {
     final DateTime now = DateTime.now();
     var oldestDate = DateTime(now.year, now.month, now.day - 1);
 
+  print(state);
+  print(refreshState);
+
     if (refreshState != null) {
         final String lastRefresh = refreshState['lastRefresh'].toString();
         oldestDate = DateTime.parse(lastRefresh);
@@ -85,7 +88,7 @@ class NewsController extends ResourceController {
     final String oldest = formatter.format(oldestDate);
 
     // Generate combined String and URL encode it
-    final String requestString = '$_newsEndpoint?q=$query&domains=$sources&from=$oldest&apiKey=$_apiKey';
+    final String requestString = '$_newsEndpoint?q=$query&sources=cbc-news&domains=$sources&from=$oldest&apiKey=$_apiKey';
     print(requestString);
 
     // Perform http request
@@ -118,6 +121,7 @@ class NewsController extends ResourceController {
 
     // Add update entry
      var update = formatter.format(DateTime.now());
+     print(update);
      await state.remove({'identifier': 'refresh'});
      await state.insert({'identifier': 'refresh', 'lastRefresh': update});
   }
