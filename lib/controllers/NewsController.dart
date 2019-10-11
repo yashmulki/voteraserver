@@ -118,7 +118,6 @@ class NewsController extends ResourceController {
 
     // Add update entry
      var update = formatter.format(DateTime.now());
-     await state.remove({});
      await state.insert({'identifier': 'refresh', 'lastRefresh': update});
   }
 
