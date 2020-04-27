@@ -1,21 +1,7 @@
-# votera_server
+# Votera
 
-## Running the Application Locally
+## What is Votera Server
 
-Run `aqueduct serve` from this directory to run the application. For running within an IDE, run `bin/main.dart`. By default, a configuration file named `config.yaml` will be used.
+Votera Server is the backend for the Votisor iOS application focused on driving greater voter engagement and turnout in Canadian elections. It collates and provides a variety of data on elections, candidates, current representatives and polling data (when available). 
 
-To generate a SwaggerUI client, run `aqueduct document client`.
-
-## Running Application Tests
-
-To run all tests for this application, run the following in this directory:
-
-```
-pub run test
-```
-
-The default configuration file used when testing is `config.src.yaml`. This file should be checked into version control. It also the template for configuration files used in deployment.
-
-## Deploying an Application
-
-See the documentation for [Deployment](https://aqueduct.io/docs/deploy/).
+Votera server is coded in the Dart programming language using the Aqueduct framework (www.aqueduct.io)
